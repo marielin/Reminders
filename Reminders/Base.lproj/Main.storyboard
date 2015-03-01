@@ -83,6 +83,9 @@
                                             <rect key="frame" x="15" y="11" width="570" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            <connections>
+                                                <action selector="editingDidEnd:" destination="9Za-Io-TjL" eventType="editingDidEnd" id="FU1-I3-FEK"/>
+                                            </connections>
                                         </textField>
                                     </subviews>
                                     <constraints>

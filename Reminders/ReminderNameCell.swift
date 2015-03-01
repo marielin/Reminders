@@ -10,4 +10,9 @@ import UIKit
 
 class ReminderNameCell: UITableViewCell {
     @IBOutlet weak var reminderName: UITextField!
+    
+    @IBAction func editingDidEnd(sender: AnyObject) {
+        
+    }
+    
 }
