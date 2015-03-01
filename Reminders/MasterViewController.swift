@@ -7,13 +7,19 @@
 //
 
 import UIKit
+import EventKit
 
 class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
-    var objects = [AnyObject]()
+    
+    // the list of reminder lists
+    var reminderLists = [ReminderList]()
+    
+    // placeholder variable
+    var hasCompletedReminders = true
 
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
@@ -33,6 +39,10 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
+        
+        // test code
+        insertNewObject(ReminderList(name: "Test List", color: UIColor.redColor()))
+        // end test code
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,20 +50,22 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func insertNewObject(sender: AnyObject) {
-        objects.insert(NSDate(), atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+    func insertNewObject(sender: ReminderList) {
+        reminderLists.append(ReminderList(name: sender.name, color: sender.color))
+        let indexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
 
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showDetail" {
+        println("prepareForSegue")
+        if segue.identifier == "showReminderList" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let object = objects[indexPath.row] as! NSDate
+                let object = reminderLists[indexPath.row] as ReminderList
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.reminders = object.reminders
+                controller.listTitle = object.name
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -63,18 +75,29 @@ class MasterViewController: UITableViewController {
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+//        if hasCompletedReminders == false {
+//            return 1
+//        } else {
+//            return 2
+//        }
+        
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        if section == 0 {
+            return reminderLists.count
+        } else {
+            return 1
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderListCell", forIndexPath: indexPath) as! ReminderListCell
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let object = reminderLists[indexPath.row]
+        cell.reminderListName.text = object.name
+        cell.reminderListColor.textColor = reminderLists[indexPath.row].color
         return cell
     }
 
@@ -85,7 +108,7 @@ class MasterViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
+            reminderLists.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

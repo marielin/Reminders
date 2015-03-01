@@ -1,5 +1,5 @@
 //
-//  Reminder.swift
+//  ReminderCell.swift
 //  Reminders
 //
 //  Created by Marie Lin on 2015-2-28.
@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
+class ReminderCell: UITableViewCell {
+    @IBOutlet weak var reminderName: UITextField!
+}

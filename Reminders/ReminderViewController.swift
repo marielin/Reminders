@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  ReminderViewController.swift
 //  Reminders
 //
 //  Created by Marie Lin on 2015-2-28.
@@ -9,26 +9,13 @@
 import UIKit
 import EventKit
 
-class DetailViewController: UITableViewController {
+class ReminderViewController: UITableViewController {
     
     var reminders = [EKReminder]()
-    var listTitle = String()
     
-  
     override func viewDidLoad() {
-        println("viewDidLoad")
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        self.title = listTitle
-        
-        let eventStore = EKEventStore()
-        var reminder = EKReminder(eventStore: eventStore)
-        reminder.title = "Test reminder"
-        let alarm = EKAlarm(relativeOffset: 60 * 60) // 1 hour
-        reminder.addAlarm(alarm)
-        reminder.notes = "Brief description of the reminder"
-        insertNewObject(reminder)
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,42 +23,39 @@ class DetailViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func insertNewObject(reminder: EKReminder) {
-        reminders.insert(reminder, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    func insertNewObject(sender: AnyObject) {
+//        reminderLists.insert(ReminderList(name: name, color: color), atIndex: 0)
+//        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+//        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
     // MARK: - Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow() {
-//                let object = reminderLists[indexPath.row] as ReminderList
-//                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-//                controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
+
     }
     
     // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reminders.count
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return reminders.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         
         let object = reminders[indexPath.row] as EKReminder
-        cell.reminderName.text = object.title
-        println(object.title)
+//        cell.textLabel!.text = object.name
         return cell
     }
     
@@ -89,6 +73,5 @@ class DetailViewController: UITableViewController {
         }
     }
 
-
+    
 }
-
