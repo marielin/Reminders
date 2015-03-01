@@ -36,7 +36,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 		
 		
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderList:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderListPressed:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -139,13 +139,17 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		return nil
 	}
 	
-	func createNewReminderList(sender: AnyObject!) {
+	func createNewReminderListPressed(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
 		insertNewObject(ReminderList(name: "", color: colorForNewList))
 		let newIndexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
 		newCell.reminderListName.becomeFirstResponder()
+	}
+	
+	override func setEditing(editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: animated)
 	}
 
     // MARK: - Segues
@@ -217,6 +221,15 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
 		let cell = self.cellForTextField(textField)
 		return cell != nil ? cell!.editing : false
+	}
+	
+	/// Save the new Reminder List
+	func textFieldDidEndEditing(textField: UITextField) {
+		let cell = self.cellForTextField(textField)!
+		let calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: self.eventStore)
+		calendar.title = textField.text
+		let color = cell.reminderListColor.textColor
+		calendar.CGColor = color.CGColor
 	}
 	
 	func textFieldShouldReturn(textField: UITextField) -> Bool {

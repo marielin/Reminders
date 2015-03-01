@@ -16,9 +16,7 @@ class ReminderListCell : UITableViewCell, UITextFieldDelegate {
 	
 	override func setEditing(editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
-		if !editing {
-			self.reminderListName.endEditing(false)
-		}
+		self.reminderListName.userInteractionEnabled = editing
 	}
 	
 }
