@@ -37,7 +37,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 		
 		
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderList:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderListPressed:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -129,7 +129,18 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 	}
 	
-	func createNewReminderList(sender: AnyObject!) {
+	func cellForTextField(textField: UITextField) -> ReminderListCell? {
+		for i in 0 ..< self.reminderLists.count {
+			let indexPath = NSIndexPath(forRow: i, inSection: 0)
+			let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+			if textField == cell.reminderListName {
+				return cell
+			}
+		}
+		return nil
+	}
+	
+	func createNewReminderListPressed(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
 		reminderLists.insert(ReminderList(name: "", color: colorForNewList), atIndex: 0)
 		let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -137,7 +148,11 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         println(self.tableView)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath)!
 		newCell.setEditing(true, animated: true)
-		newCell.becomeFirstResponder()
+		newCell.reminderListName.becomeFirstResponder()
+	}
+	
+	override func setEditing(editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: animated)
 	}
 
     // MARK: - Segues
@@ -158,13 +173,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        if hasCompletedReminders == false {
-//            return 1
-//        } else {
-//            return 2
-//        }
-        
-        return 1
+		return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -189,6 +198,17 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
+	
+	override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+		cell.reminderListName.enabled = true
+	}
+	
+	override func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+		cell.reminderListName.enabled = false
+		//TODO: save
+	}
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -197,7 +217,30 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
-    }
+	}
+	
+	// MARK: - UITextFieldDelegate
+	
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		let cell = self.cellForTextField(textField)
+		return cell != nil ? cell!.editing : false
+	}
+	
+	/// Save the new Reminder List
+	func textFieldDidEndEditing(textField: UITextField) {
+		let cell = self.cellForTextField(textField)!
+		let calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: self.eventStore)
+		calendar.title = textField.text
+		let color = cell.reminderListColor.textColor
+		calendar.CGColor = color.CGColor
+	}
+	
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+		let cell = self.cellForTextField(textField)
+		cell?.setEditing(false, animated: true)
+		//TODO: save
+		return false
+	}
 	
 }
 

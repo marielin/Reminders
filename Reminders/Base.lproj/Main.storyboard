@@ -328,9 +328,9 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Reminder Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-cb-U3c">
                                             <rect key="frame" x="37" y="11" width="515" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             <connections>
-                                                <outlet property="delegate" destination="7bK-jq-Zjz" id="s4V-F9-aIf"/>
+                                                <outlet property="delegate" destination="7bK-jq-Zjz" id="fE6-uG-yI0"/>
                                             </connections>
                                         </textField>
                                     </subviews>
