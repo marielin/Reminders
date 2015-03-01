@@ -14,6 +14,8 @@
 		17828A951AA285D600782036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17828A941AA285D600782036 /* Images.xcassets */; };
 		17828A981AA285D600782036 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17828A961AA285D600782036 /* LaunchScreen.xib */; };
 		17828AA41AA285D600782036 /* RemindersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AA31AA285D600782036 /* RemindersTests.swift */; };
+		17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AAD1AA289BA00782036 /* ReminderList.swift */; };
+		17828AB01AA289C300782036 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AAF1AA289C300782036 /* Reminder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 		17828A9D1AA285D600782036 /* RemindersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17828AA21AA285D600782036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17828AA31AA285D600782036 /* RemindersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersTests.swift; sourceTree = "<group>"; };
+		17828AAD1AA289BA00782036 /* ReminderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderList.swift; sourceTree = "<group>"; };
+		17828AAF1AA289C300782036 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 			children = (
 				17828A8B1AA285D600782036 /* AppDelegate.swift */,
 				17828A8D1AA285D600782036 /* MasterViewController.swift */,
+				17828AAD1AA289BA00782036 /* ReminderList.swift */,
+				17828AAF1AA289C300782036 /* Reminder.swift */,
 				17828A8F1AA285D600782036 /* DetailViewController.swift */,
 				17828A911AA285D600782036 /* Main.storyboard */,
 				17828A941AA285D600782036 /* Images.xcassets */,
@@ -164,6 +170,7 @@
 				TargetAttributes = {
 					17828A851AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = 2S3D8J8M3T;
 					};
 					17828A9C1AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
@@ -218,6 +225,8 @@
 				17828A901AA285D600782036 /* DetailViewController.swift in Sources */,
 				17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */,
 				17828A8C1AA285D600782036 /* AppDelegate.swift in Sources */,
+				17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */,
+				17828AB01AA289C300782036 /* Reminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +355,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Reminders/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -356,7 +367,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Reminders/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
