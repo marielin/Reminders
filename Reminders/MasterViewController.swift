@@ -58,7 +58,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
+            self.detailViewController = controllers[controllers.count - 1].topViewController as? DetailViewController
         }
         
         // test code
@@ -93,13 +93,12 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	
 	func reloadReminders() {
 		// remove all existing reminder lists
-		var indexPaths = [NSIndexPath]()
+		self.tableView.beginUpdates()
 		for i in 0 ..< self.reminderLists.count {
-			self.tableView.deleteRowsAtIndexPaths([NSIndexPath(index: i)], withRowAnimation: .Automatic)
+			self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: i + 1, inSection: 0)], withRowAnimation: .Automatic)
 		}
 		self.reminderLists = [ReminderList]()
 		
-		self.tableView.beginUpdates()
 		self.beginUpdatesCount++ // don't refresh until we're done with all sources
 		// load all reminder lists from the database
 		let sources = eventStore.sources() as! [EKSource]
@@ -163,12 +162,21 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 
     func insertNewObject(sender: ReminderList) {
         reminderLists.append(sender)
-        let indexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
+        let indexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 	}
+    
+    func insertNewObjects(lists: [ReminderList]) {
+        var indexPaths = [NSIndexPath]()
+        for i in reminderLists.count ..< reminderLists.count + lists.count {
+            indexPaths.append(NSIndexPath(forRow: i, inSection: 0))
+        }
+        reminderLists += lists
+        self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+    }
 	
 	func cellForTextField(textField: UITextField) -> ReminderListCell? {
-		for i in 0 ..< self.reminderLists.count {
+		for i in 1 ..< self.reminderLists.count + 1 {
 			let indexPath = NSIndexPath(forRow: i, inSection: 0)
 			let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
 			if textField == cell.reminderListName {
@@ -191,7 +199,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	func createNewReminderListPressed(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
 		insertNewObject(ReminderList(name: "", color: colorForNewList))
-		let newIndexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
+		let newIndexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
 		newCell.reminderListName.becomeFirstResponder()
@@ -230,9 +238,12 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         if section == 0 {
 			// all reminders and reminder lists
             return reminderLists.count + 1
-        } else {
+        } else if section == 1 {
 			// completed reminders
             return 1
+        } else {
+            println("Error: tableView:numberOfRowsInSection: unknown section index")
+            return 0
         }
     }
 
@@ -289,7 +300,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 				println("Successfully removed calendar.")
 			}
 			
-            reminderLists.removeAtIndex(indexPath.row)
+            reminderLists.removeAtIndex(indexPath.row - 1)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

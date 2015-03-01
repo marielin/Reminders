@@ -122,17 +122,28 @@ class DetailViewController: UITableViewController {
         
         markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
         // deleteAction.backgroundColor = UIColor.redColor() // is default
-
+        
         return [deleteAction, markCompletedAction]
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            reminders.removeAtIndex(indexPath.row)
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-//        } else if editingStyle == .Complete {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-//        }
+        if editingStyle == .Delete {
+            // delete the reminder
+            let cell = tableView.cellForRowAtIndexPath(indexPath)!
+            var reminder = getReminderForName(cell.textLabel!.text!)
+            var error = NSErrorPointer()
+            dataStore.eventStore.removeReminder(reminder, commit: true, error: error)
+            if error != nil {
+                println("Error deleting reminder: \(error)")
+            } else {
+                println("Successfully deleted reminder.")
+            }
+            
+            reminders.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
     }
 	
 	func getReminderForName(name: String) -> EKReminder! {

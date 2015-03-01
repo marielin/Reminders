@@ -21,6 +21,7 @@
 		17CE10881AA31AF90017AFCE /* ReminderRemindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */; };
 		17CE108A1AA31B0F0017AFCE /* ReminderNotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */; };
 		17CE108C1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE108B1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift */; };
+		B8733DCE1AA364B60014FC1F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8733DCD1AA364B60014FC1F /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderRemindCell.swift; sourceTree = "<group>"; };
 		17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderNotesCell.swift; sourceTree = "<group>"; };
 		17CE108B1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderAlarmPickerCell.swift; sourceTree = "<group>"; };
+		B8733DCD1AA364B60014FC1F /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +77,6 @@
 		17828A7D1AA285D600782036 = {
 			isa = PBXGroup;
 			children = (
-				B8733DCD1AA364B60014FC1F /* DataStore.swift */,
 				17828A881AA285D600782036 /* Reminders */,
 				17828AA01AA285D600782036 /* RemindersTests */,
 				17828A871AA285D600782036 /* Products */,
@@ -94,6 +95,7 @@
 		17828A881AA285D600782036 /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
+				B8733DCD1AA364B60014FC1F /* DataStore.swift */,
 				17828AAD1AA289BA00782036 /* ReminderList.swift */,
 				17828AE11AA2BB8B00782036 /* ReminderListCell.swift */,
 				17828A8B1AA285D600782036 /* AppDelegate.swift */,
@@ -240,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CE10881AA31AF90017AFCE /* ReminderRemindCell.swift in Sources */,
+				B8733DCE1AA364B60014FC1F /* DataStore.swift in Sources */,
 				17828A901AA285D600782036 /* DetailViewController.swift in Sources */,
 				17CE10861AA31AED0017AFCE /* ReminderNameCell.swift in Sources */,
 				17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */,
@@ -414,6 +417,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = RemindersTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reminders.app/Reminders";
@@ -429,6 +433,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = RemindersTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reminders.app/Reminders";
