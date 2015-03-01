@@ -12,6 +12,6 @@ import UIKit
 class ReminderListCell : UITableViewCell {
 
     @IBOutlet weak var reminderListColor: UILabel!
-    @IBOutlet weak var reminderListName: UILabel!
+    @IBOutlet weak var reminderListName: UITextField!
     
 }

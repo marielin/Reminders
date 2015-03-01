@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, UITextFieldDelegate {
 
     var detailViewController: DetailViewController? = nil
     
@@ -34,10 +34,10 @@ class MasterViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
-		//TODO: this
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-//        self.navigationItem.rightBarButtonItem = addButton
+		
+		
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderList:")
+        self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
@@ -62,12 +62,15 @@ class MasterViewController: UITableViewController {
 		}
 		self.reminderLists = [ReminderList]()
 		
+		self.tableView.beginUpdates()
+		self.beginUpdatesCount++ // don't refresh until we're done with all sources
 		// load all reminder lists from the database
 		let sources = eventStore.sources() as! [EKSource]
 		// get the reminder lists
 		for source in sources {
 			for calendar in source.calendarsForEntityType(EKEntityTypeReminder) as! Set<EKCalendar> {
 				if (calendar.allowedEntityTypes & EKEntityMaskReminder) != 0 {
+					self.beginUpdatesCount++
 					let color = UIColor(CGColor: calendar.CGColor)!
 					var reminderList = ReminderList(name: calendar.title, color: color)
 					let predicate = eventStore.predicateForIncompleteRemindersWithDueDateStarting(nil, ending: nil, calendars: [calendar])
@@ -75,13 +78,20 @@ class MasterViewController: UITableViewController {
 				}
 			}
 		}
+		self.beginUpdatesCount--
 	}
+	private var beginUpdatesCount = 0
 	
 	func fetchRemindersForPredicate(predicate: NSPredicate, reminderList: ReminderList) {
 		eventStore.fetchRemindersMatchingPredicate(predicate) { (objects) -> Void in
 			let reminders = objects as! [EKReminder]
 			reminderList.reminders = reminders
 			self.insertNewObject(reminderList)
+			
+			self.beginUpdatesCount--
+			if self.beginUpdatesCount == 0 {
+				self.tableView.endUpdates()
+			}
 		}
 	}
 	
@@ -116,7 +126,17 @@ class MasterViewController: UITableViewController {
         reminderLists.append(sender)
         let indexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-    }
+	}
+	
+	func createNewReminderList(sender: AnyObject!) {
+		let colorForNewList = UIColor.greenColor()
+		reminderLists.insert(ReminderList(name: "", color: colorForNewList), atIndex: 0)
+		let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+		self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath)!
+		newCell.setEditing(true, animated: true)
+		newCell.becomeFirstResponder()
+	}
 
     // MARK: - Segues
 
