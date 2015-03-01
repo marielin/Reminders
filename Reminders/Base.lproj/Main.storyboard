@@ -82,7 +82,7 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Reminder Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RlQ-0w-LcA">
                                             <rect key="frame" x="15" y="11" width="570" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -93,7 +93,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="reminderName" destination="RlQ-0w-LcA" id="ltN-31-xGR"/>
+                                    <outlet property="reminderName" destination="RlQ-0w-LcA" id="pLF-RJ-6cw"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderRemindCell" id="WO5-q4-Jn3" customClass="ReminderRemindCell" customModule="Reminders" customModuleProvider="target">

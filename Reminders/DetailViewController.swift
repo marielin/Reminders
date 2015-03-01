@@ -14,6 +14,8 @@ class DetailViewController: UITableViewController {
     var reminders = [EKReminder]()
     var listTitle = String()
     
+    let dateFormatter = NSDateFormatter()
+    let timeFormatter = NSDateFormatter()
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,16 +24,13 @@ class DetailViewController: UITableViewController {
         self.title = listTitle
         
         let eventStore = EKEventStore()
-        var reminder = EKReminder(eventStore: eventStore)
-        reminder.title = "Test reminder"
-        let alarm = EKAlarm(relativeOffset: 60 * 60) // 1 hour
-        reminder.addAlarm(alarm)
-        reminder.notes = "Brief description of the reminder"
-        insertNewObject(reminder)
+        
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.doesRelativeDateFormatting = true;
         
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,6 +72,16 @@ class DetailViewController: UITableViewController {
         
         let object = reminders[indexPath.row] as EKReminder
         cell.textLabel!.text = object.title
+        if object.hasAlarms == true {
+            let alarmDate: NSDate = object.alarms[0].absoluteDate
+            if alarmDate.timeIntervalSinceNow < 60*60*24 {
+                cell.detailTextLabel!.text = timeFormatter.stringFromDate(alarmDate)
+            } else {
+                cell.detailTextLabel!.text = dateFormatter.stringFromDate(alarmDate)
+            }
+        } else {
+            cell.detailTextLabel!.text = ""
+        }
         return cell
     }
     

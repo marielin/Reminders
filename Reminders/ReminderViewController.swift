@@ -24,6 +24,8 @@ class ReminderViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.doesRelativeDateFormatting = true;
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +77,8 @@ class ReminderViewController: UITableViewController {
 
         if indexPath.section == 0 {
             var cell = cell as! ReminderNameCell
-            cell.reminderName.text == reminder.title
+            println(cell.reminderName.text)
+            cell.reminderName.text = reminder.title
         } else {
             if indexPath.row == 0 {
                 var cell = cell as! ReminderRemindCell
@@ -85,6 +88,7 @@ class ReminderViewController: UITableViewController {
             else if reminder.hasAlarms == true {
                 if indexPath.row == 1 { // ReminderAlarmCell
                     cell.detailTextLabel!.text = dateFormatter.stringFromDate(reminder.alarms[0].absoluteDate)
+//                    cell.detailTextLabel!.text = dateFormatter.string
                 } else if isEditingAlarm == true {
                     if indexPath.row == 2 { // ReminderNotesCell
                         

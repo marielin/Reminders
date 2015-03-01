@@ -159,7 +159,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showReminderList" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                let object = reminderLists[indexPath.row] as ReminderList
+                let object = reminderLists[indexPath.row - 1] as ReminderList
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.reminders = object.reminders
                 controller.listTitle = object.name
@@ -172,25 +172,44 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+        if hasCompletedReminders == true {
+            return 2
+        } else {
+            return 1
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-			// user's reminder lists
-            return reminderLists.count
+			// all reminders and reminder lists
+            return reminderLists.count + 1
         } else {
-			// All Reminders and Completed
+			// completed reminders
             return 1
         }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderListCell", forIndexPath: indexPath) as! ReminderListCell
+        
+        var identifier = String()
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            identifier = "AllRemindersCell"
+        } else if indexPath.section == 0 && indexPath.row > 0 {
+            identifier = "ReminderListCell"
+        } else {
+            identifier = "CompletedRemindersCell"
+        }
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! UITableViewCell
+        
+        if indexPath.section == 0 && indexPath.row > 0 {
+            var cell = cell as! ReminderListCell
+            let object = reminderLists[indexPath.row - 1]
+            cell.reminderListName.text = object.name
+            cell.reminderListColor.textColor = reminderLists[indexPath.row - 1].color
+        }
 
-        let object = reminderLists[indexPath.row]
-        cell.reminderListName.text = object.name
-        cell.reminderListColor.textColor = reminderLists[indexPath.row].color
         return cell
     }
 
