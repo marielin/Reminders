@@ -272,7 +272,15 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     }
 
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+		if indexPath.section == 0 {
+			if indexPath.row == 0 {
+				return false
+			} else {
+				return true
+			}
+		} else {
+			return false
+		}
     }
 	
 	override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {

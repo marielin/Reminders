@@ -94,7 +94,7 @@ class DetailViewController: UITableViewController {
         cell.textLabel!.text = object.title
         if object.hasAlarms == true {
             let alarmDate: NSDate = object.alarms[0].absoluteDate
-            if alarmDate.timeIntervalSinceNow < 60*60*24 {
+            if alarmDate.timeIntervalSinceNow < 60 * 60 * 24 {
                 cell.detailTextLabel!.text = timeFormatter.stringFromDate(alarmDate)
             } else {
                 cell.detailTextLabel!.text = dateFormatter.stringFromDate(alarmDate)
@@ -106,8 +106,7 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        return false
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
@@ -117,10 +116,10 @@ class DetailViewController: UITableViewController {
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         })
         var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            
+            self.deleteReminderForCellAtIndexPath(indexPath)
         })
         
-        markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
+        markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0)
         // deleteAction.backgroundColor = UIColor.redColor() // is default
         
         return [deleteAction, markCompletedAction]
@@ -128,7 +127,14 @@ class DetailViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // delete the reminder
+			self.deleteReminderForCellAtIndexPath(indexPath)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+	
+	func deleteReminderForCellAtIndexPath(indexPath: NSIndexPath) {
+		// delete the reminder
             let cell = tableView.cellForRowAtIndexPath(indexPath)!
             var reminder = getReminderForName(cell.textLabel!.text!)
             var error = NSErrorPointer()
@@ -141,10 +147,7 @@ class DetailViewController: UITableViewController {
             
             reminders.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
-    }
+	}
 	
 	func getReminderForName(name: String) -> EKReminder! {
 		for reminder in self.reminders {
