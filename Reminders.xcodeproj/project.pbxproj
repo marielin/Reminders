@@ -75,6 +75,7 @@
 		17828A7D1AA285D600782036 = {
 			isa = PBXGroup;
 			children = (
+				B8733DCD1AA364B60014FC1F /* DataStore.swift */,
 				17828A881AA285D600782036 /* Reminders */,
 				17828AA01AA285D600782036 /* RemindersTests */,
 				17828A871AA285D600782036 /* Products */,
