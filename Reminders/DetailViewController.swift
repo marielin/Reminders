@@ -16,7 +16,6 @@ class DetailViewController: UITableViewController {
     
   
     override func viewDidLoad() {
-        println("viewDidLoad")
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -45,15 +44,14 @@ class DetailViewController: UITableViewController {
     // MARK: - Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow() {
-//                let object = reminderLists[indexPath.row] as ReminderList
-//                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-//                controller.detailItem = object
-//                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
+        if segue.identifier == "showReminderDetails" {
+            if let indexPath = self.tableView.indexPathForSelectedRow() {
+                let object = reminders[indexPath.row] as EKReminder
+                let destination = (segue.destinationViewController as! ReminderViewController)
+                destination.reminder = object
+//                destination.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
     }
     
     // MARK: - Table View
@@ -66,12 +64,11 @@ class DetailViewController: UITableViewController {
         return reminders.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
+        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! UITableViewCell
         
         let object = reminders[indexPath.row] as EKReminder
-        cell.reminderName.text = object.title
-        println(object.title)
+        cell.textLabel!.text = object.title
         return cell
     }
     

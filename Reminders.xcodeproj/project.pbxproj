@@ -17,7 +17,6 @@
 		17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AAD1AA289BA00782036 /* ReminderList.swift */; };
 		17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AB11AA2A81D00782036 /* ReminderViewController.swift */; };
 		17828AE21AA2BB8B00782036 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AE11AA2BB8B00782036 /* ReminderListCell.swift */; };
-		17ED496F1AA2D706004B506E /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ED496E1AA2D706004B506E /* ReminderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +44,6 @@
 		17828AAD1AA289BA00782036 /* ReminderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderList.swift; sourceTree = "<group>"; };
 		17828AB11AA2A81D00782036 /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		17828AE11AA2BB8B00782036 /* ReminderListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
-		17ED496E1AA2D706004B506E /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,14 +85,13 @@
 		17828A881AA285D600782036 /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
+				17828AAD1AA289BA00782036 /* ReminderList.swift */,
+				17828AE11AA2BB8B00782036 /* ReminderListCell.swift */,
 				17828A8B1AA285D600782036 /* AppDelegate.swift */,
 				17828A8D1AA285D600782036 /* MasterViewController.swift */,
-				17828AAD1AA289BA00782036 /* ReminderList.swift */,
 				17828A8F1AA285D600782036 /* DetailViewController.swift */,
-				17ED496E1AA2D706004B506E /* ReminderCell.swift */,
-				17828A911AA285D600782036 /* Main.storyboard */,
-				17828AE11AA2BB8B00782036 /* ReminderListCell.swift */,
 				17828AB11AA2A81D00782036 /* ReminderViewController.swift */,
+				17828A911AA285D600782036 /* Main.storyboard */,
 				17828A941AA285D600782036 /* Images.xcassets */,
 				17828A961AA285D600782036 /* LaunchScreen.xib */,
 				17828A891AA285D600782036 /* Supporting Files */,
@@ -231,7 +228,6 @@
 				17828A901AA285D600782036 /* DetailViewController.swift in Sources */,
 				17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */,
 				17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */,
-				17ED496F1AA2D706004B506E /* ReminderCell.swift in Sources */,
 				17828A8C1AA285D600782036 /* AppDelegate.swift in Sources */,
 				17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */,
 				17828AE21AA2BB8B00782036 /* ReminderListCell.swift in Sources */,

@@ -59,7 +59,6 @@ class MasterViewController: UITableViewController {
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        println("prepareForSegue")
         if segue.identifier == "showReminderList" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 let object = reminderLists[indexPath.row] as ReminderList
