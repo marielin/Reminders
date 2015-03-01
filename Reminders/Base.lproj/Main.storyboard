@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7519.1" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7513.1"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -277,12 +276,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder List Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26K-Al-dUY">
-                                            <rect key="frame" x="37" y="11" width="515" height="21"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAy-yI-ef6">
                                             <rect key="frame" x="15" y="14" width="12" height="15"/>
                                             <constraints>
@@ -292,41 +285,31 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Reminder Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-cb-U3c">
+                                            <rect key="frame" x="35" y="11" width="515" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="7bK-jq-Zjz" id="s4V-F9-aIf"/>
+                                            </connections>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="BAy-yI-ef6" secondAttribute="bottom" id="0MF-xq-dnr"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="7" id="5Ze-Bo-oOn"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="centerY" secondItem="BAy-yI-ef6" secondAttribute="centerY" id="5sn-0m-2Zb"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" id="6h5-YL-gyd"/>
                                         <constraint firstAttribute="centerY" secondItem="BAy-yI-ef6" secondAttribute="centerY" id="B3u-bd-6LH"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="10" id="DST-1N-CjX"/>
                                         <constraint firstAttribute="centerY" secondItem="BAy-yI-ef6" secondAttribute="centerY" id="Dyp-i3-FMO"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="bottom" secondItem="l2e-Ew-UW2" secondAttribute="bottomMargin" id="EJq-tG-0C8"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" constant="7" id="Esr-43-9at"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="26K-Al-dUY" secondAttribute="trailing" constant="7" id="FPC-F5-M5k"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" id="GVU-Th-8Z2"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="7" id="GyT-Oq-VzS"/>
                                         <constraint firstAttribute="centerY" secondItem="BAy-yI-ef6" secondAttribute="centerY" id="I39-wH-1cR"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="26K-Al-dUY" secondAttribute="trailing" constant="7" id="ISy-e3-5kN"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="7" id="Iax-Uc-HkA"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="BAy-yI-ef6" secondAttribute="bottom" constant="3" id="IlB-vG-8cv"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="bottom" secondItem="l2e-Ew-UW2" secondAttribute="bottomMargin" id="Kym-iK-3r5"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leading" constant="34" id="LsV-aI-UkU"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" constant="7" id="MkG-un-u16"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="8" symbolic="YES" id="R8M-Rv-2Rn"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" constant="3" id="V9v-U0-eWN"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="26K-Al-dUY" secondAttribute="bottom" constant="3" id="WV7-3k-9by"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="26K-Al-dUY" secondAttribute="trailing" constant="7" id="Z9V-oS-C8N"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="8" id="Zfu-we-NlM"/>
-                                        <constraint firstItem="BAy-yI-ef6" firstAttribute="baseline" secondItem="26K-Al-dUY" secondAttribute="baseline" id="a1F-Ic-8cj"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" id="duK-iQ-vPs"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="26K-Al-dUY" secondAttribute="trailing" constant="7" id="gld-6P-sxh"/>
-                                        <constraint firstItem="BAy-yI-ef6" firstAttribute="firstBaseline" secondItem="26K-Al-dUY" secondAttribute="firstBaseline" id="icr-T1-jAy"/>
+                                        <constraint firstItem="c9w-cb-U3c" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" constant="3" id="jk5-Si-7af"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="c9w-cb-U3c" secondAttribute="bottom" constant="3" id="n1c-ez-VQR"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" constant="3" id="obn-U4-4By"/>
                                         <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" constant="7" id="omo-qn-BMd"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="7" id="pIe-x0-Oqk"/>
-                                        <constraint firstAttribute="centerY" secondItem="26K-Al-dUY" secondAttribute="centerY" id="ugm-mr-myh"/>
-                                        <constraint firstItem="26K-Al-dUY" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" id="zkz-nI-Q7I"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="c9w-cb-U3c" secondAttribute="trailing" constant="7" id="rjb-8Z-RPZ"/>
+                                        <constraint firstItem="c9w-cb-U3c" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="10" id="tYp-bk-wcY"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
@@ -336,34 +319,16 @@
                                             <exclude reference="Esr-43-9at"/>
                                             <exclude reference="I39-wH-1cR"/>
                                             <exclude reference="IlB-vG-8cv"/>
-                                            <exclude reference="a1F-Ic-8cj"/>
                                             <exclude reference="duK-iQ-vPs"/>
-                                            <exclude reference="icr-T1-jAy"/>
                                             <exclude reference="obn-U4-4By"/>
                                             <exclude reference="omo-qn-BMd"/>
-                                            <exclude reference="5Ze-Bo-oOn"/>
-                                            <exclude reference="5sn-0m-2Zb"/>
-                                            <exclude reference="EJq-tG-0C8"/>
-                                            <exclude reference="FPC-F5-M5k"/>
-                                            <exclude reference="GVU-Th-8Z2"/>
-                                            <exclude reference="GyT-Oq-VzS"/>
-                                            <exclude reference="ISy-e3-5kN"/>
-                                            <exclude reference="Iax-Uc-HkA"/>
-                                            <exclude reference="Kym-iK-3r5"/>
-                                            <exclude reference="LsV-aI-UkU"/>
-                                            <exclude reference="R8M-Rv-2Rn"/>
-                                            <exclude reference="Zfu-we-NlM"/>
-                                            <exclude reference="gld-6P-sxh"/>
-                                            <exclude reference="pIe-x0-Oqk"/>
-                                            <exclude reference="ugm-mr-myh"/>
-                                            <exclude reference="zkz-nI-Q7I"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="reminderListColor" destination="BAy-yI-ef6" id="0Xa-AP-xvR"/>
-                                    <outlet property="reminderListName" destination="26K-Al-dUY" id="C6j-H7-Nae"/>
+                                    <outlet property="reminderListName" destination="c9w-cb-U3c" id="ICT-hM-XCV"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showReminderList" id="YjC-Jq-Lx6"/>
                                 </connections>
                             </tableViewCell>
@@ -391,9 +356,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Reminders" id="Zdf-7t-Un8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="BOC-rn-g64"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Reminders" id="Zdf-7t-Un8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>

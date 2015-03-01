@@ -173,11 +173,11 @@
 				TargetAttributes = {
 					17828A851AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = VM5XXWMN9Y;
 					};
 					17828A9C1AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = VM5XXWMN9Y;
 						TestTargetID = 17828A851AA285D600782036;
 					};
 				};
