@@ -17,6 +17,7 @@
 		17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AAD1AA289BA00782036 /* ReminderList.swift */; };
 		17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AB11AA2A81D00782036 /* ReminderViewController.swift */; };
 		17828AE21AA2BB8B00782036 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AE11AA2BB8B00782036 /* ReminderListCell.swift */; };
+		B8733DCE1AA364B60014FC1F /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8733DCD1AA364B60014FC1F /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		17828AAD1AA289BA00782036 /* ReminderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderList.swift; sourceTree = "<group>"; };
 		17828AB11AA2A81D00782036 /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		17828AE11AA2BB8B00782036 /* ReminderListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
+		B8733DCD1AA364B60014FC1F /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStore.swift; path = Reminders/DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 		17828A7D1AA285D600782036 = {
 			isa = PBXGroup;
 			children = (
+				B8733DCD1AA364B60014FC1F /* DataStore.swift */,
 				17828A881AA285D600782036 /* Reminders */,
 				17828AA01AA285D600782036 /* RemindersTests */,
 				17828A871AA285D600782036 /* Products */,
@@ -226,6 +229,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8733DCE1AA364B60014FC1F /* DataStore.swift in Sources */,
 				17828A901AA285D600782036 /* DetailViewController.swift in Sources */,
 				17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */,
 				17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */,

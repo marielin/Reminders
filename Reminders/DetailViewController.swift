@@ -13,6 +13,17 @@ class DetailViewController: UITableViewController {
     
     var reminders = [EKReminder]()
     var listTitle = String()
+	
+	let dataStore = DataStore.sharedInstance
+	
+	var masterVC: MasterViewController! {
+		if let parent = self.presentingViewController {
+			if let master = parent as? MasterViewController {
+				return master
+			}
+		}
+		return nil
+	}
     
   
     override func viewDidLoad() {
@@ -36,6 +47,15 @@ class DetailViewController: UITableViewController {
     }
     
     func insertNewObject(reminder: EKReminder) {
+		// save the new reminder
+		var error = NSErrorPointer()
+		dataStore.eventStore.saveReminder(reminder, commit: true, error: error)
+		if error != nil {
+			println("Error saving reminder: \(error)")
+		} else {
+			println("Successfully saved reminder.")
+		}
+		
         reminders.insert(reminder, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -79,12 +99,32 @@ class DetailViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+			// delete the reminder
+			let cell = tableView.cellForRowAtIndexPath(indexPath)!
+			var reminder = getReminderForName(cell.textLabel!.text!)
+			var error = NSErrorPointer()
+			dataStore.eventStore.removeReminder(reminder, commit: true, error: error)
+			if error != nil {
+				println("Error deleting reminder: \(error)")
+			} else {
+				println("Successfully deleted reminder.")
+			}
+			
             reminders.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
+	
+	func getReminderForName(name: String) -> EKReminder! {
+		for reminder in self.reminders {
+			if reminder.title == name {
+				return reminder
+			}
+		}
+		return nil
+	}
 
 
 }

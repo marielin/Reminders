@@ -19,9 +19,25 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     // placeholder variable
     var hasCompletedReminders = true
 	
-	var eventStore: EKEventStore!
+	let dataStore = DataStore.sharedInstance
 	
-	var source: EKSource!
+	var eventStore: EKEventStore! {
+		get {
+			return self.dataStore.eventStore
+		}
+		set {
+			self.dataStore.eventStore = newValue
+		}
+	}
+	
+	var source: EKSource! {
+		get {
+			return self.dataStore.source
+		}
+		set {
+			self.dataStore.source = newValue
+		}
+	}
 
 	
     override func awakeFromNib() {
