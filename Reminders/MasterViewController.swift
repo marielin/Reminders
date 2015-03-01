@@ -128,14 +128,24 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 	}
 	
+	func cellForTextField(textField: UITextField) -> ReminderListCell? {
+		for i in 0 ..< self.reminderLists.count {
+			let indexPath = NSIndexPath(forRow: i, inSection: 0)
+			let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+			if textField == cell.reminderListName {
+				return cell
+			}
+		}
+		return nil
+	}
+	
 	func createNewReminderList(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
-		reminderLists.insert(ReminderList(name: "", color: colorForNewList), atIndex: 0)
-		let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath)!
+		insertNewObject(ReminderList(name: "", color: colorForNewList))
+		let newIndexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
+		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
-		newCell.becomeFirstResponder()
+		newCell.reminderListName.becomeFirstResponder()
 	}
 
     // MARK: - Segues
@@ -156,13 +166,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        if hasCompletedReminders == false {
-//            return 1
-//        } else {
-//            return 2
-//        }
-        
-        return 1
+		return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -187,6 +191,17 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
+	
+	override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+		cell.reminderListName.enabled = true
+	}
+	
+	override func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+		let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
+		cell.reminderListName.enabled = false
+		//TODO: save
+	}
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -195,7 +210,21 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
-    }
+	}
+	
+	// MARK: - UITextFieldDelegate
+	
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		let cell = self.cellForTextField(textField)
+		return cell != nil ? cell!.editing : false
+	}
+	
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+		let cell = self.cellForTextField(textField)
+		cell?.setEditing(false, animated: true)
+		//TODO: save
+		return false
+	}
 	
 }
 

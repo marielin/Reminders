@@ -9,9 +9,16 @@
 import Foundation
 import UIKit
 
-class ReminderListCell : UITableViewCell {
+class ReminderListCell : UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var reminderListColor: UILabel!
     @IBOutlet weak var reminderListName: UITextField!
-    
+	
+	override func setEditing(editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: animated)
+		if !editing {
+			self.reminderListName.endEditing(false)
+		}
+	}
+	
 }
