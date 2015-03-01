@@ -30,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReminderCell" textLabel="O6I-sz-VDS" style="IBUITableViewCellStyleDefault" id="URB-v9-Xcp">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReminderCell" textLabel="O6I-sz-VDS" detailTextLabel="2zP-yc-o7K" style="IBUITableViewCellStyleValue1" id="URB-v9-Xcp">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="URB-v9-Xcp" id="czF-Iw-00H">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -39,6 +39,12 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2zP-yc-o7K">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -68,7 +74,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderNameCell" id="9Za-Io-TjL">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderNameCell" id="9Za-Io-TjL" customClass="ReminderNameCell" customModule="Reminders" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Za-Io-TjL" id="5V6-Ax-yQN">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -86,8 +92,11 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="RlQ-0w-LcA" secondAttribute="bottom" id="uZW-p8-8es"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="reminderName" destination="RlQ-0w-LcA" id="ltN-31-xGR"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderRemindCell" id="WO5-q4-Jn3">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderRemindCell" id="WO5-q4-Jn3" customClass="ReminderRemindCell" customModule="Reminders" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WO5-q4-Jn3" id="8lV-3p-xvC">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -114,6 +123,9 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="WDZ-dK-dhz" secondAttribute="bottom" id="uU1-p6-gjp"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="isReminder" destination="GzJ-gx-NDt" id="eI8-Ye-sLt"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderAlarmCell" textLabel="08Z-8t-Y2A" detailTextLabel="ub3-ak-IT1" style="IBUITableViewCellStyleValue1" id="A0n-NM-l2m">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -133,6 +145,34 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderAlarmPickerCell" id="6Ai-tS-mEO" customClass="ReminderAlarmPickerCell" customModule="Reminders" customModuleProvider="target">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Ai-tS-mEO" id="0hh-3V-coN">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="3Tn-4a-YH3">
+                                            <rect key="frame" x="8" y="-59.5" width="584" height="162"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="446896956.77934098">
+                                                <!--2015-03-01 10:02:36 +0000-->
+                                            </date>
+                                        </datePicker>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3Tn-4a-YH3" firstAttribute="leading" secondItem="0hh-3V-coN" secondAttribute="leadingMargin" id="69t-0J-gZB"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="3Tn-4a-YH3" secondAttribute="bottom" id="M0X-vS-x8s"/>
+                                        <constraint firstItem="3Tn-4a-YH3" firstAttribute="trailing" secondItem="0hh-3V-coN" secondAttribute="trailingMargin" id="WOG-H9-kd7"/>
+                                        <constraint firstAttribute="centerX" secondItem="3Tn-4a-YH3" secondAttribute="centerX" id="dMR-uq-00t"/>
+                                        <constraint firstAttribute="centerY" secondItem="3Tn-4a-YH3" secondAttribute="centerY" id="gBA-iB-zbE"/>
+                                        <constraint firstItem="3Tn-4a-YH3" firstAttribute="top" secondItem="0hh-3V-coN" secondAttribute="topMargin" id="jkP-Qq-ARU"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="dMR-uq-00t"/>
+                                            <exclude reference="gBA-iB-zbE"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReminderRepeatCell" textLabel="ClC-fJ-3EY" detailTextLabel="I6m-kp-GK5" style="IBUITableViewCellStyleValue1" id="nV7-m2-xwq">
@@ -158,7 +198,7 @@
                                     <segue destination="gJH-e1-6KV" kind="show" identifier="showFrequency" id="Amu-N6-RSK"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderNotesCell" id="hfL-EV-0hV">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderNotesCell" id="hfL-EV-0hV" customClass="ReminderNotesCell" customModule="Reminders" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hfL-EV-0hV" id="3Od-Ql-2Hk">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -204,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" textLabel="q6D-ee-XcF" style="IBUITableViewCellStyleDefault" id="4tV-ei-7na">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ReminderFrequencyType" textLabel="q6D-ee-XcF" style="IBUITableViewCellStyleDefault" id="4tV-ei-7na">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4tV-ei-7na" id="eGw-uS-Caq">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -285,8 +325,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Reminder Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-cb-U3c">
-                                            <rect key="frame" x="35" y="11" width="515" height="21"/>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Reminder Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c9w-cb-U3c">
+                                            <rect key="frame" x="37" y="11" width="515" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                             <connections>

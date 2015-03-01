@@ -32,6 +32,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        println(self.tableView)
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 		
@@ -133,6 +134,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		reminderLists.insert(ReminderList(name: "", color: colorForNewList), atIndex: 0)
 		let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
 		self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        println(self.tableView)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath)!
 		newCell.setEditing(true, animated: true)
 		newCell.becomeFirstResponder()
