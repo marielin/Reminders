@@ -32,7 +32,6 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        println(self.tableView)
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 		
@@ -53,6 +52,8 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		if hasPermission() {
 			reloadReminders()
 		}
+        
+        // handle 
     }
 	
 	func reloadReminders() {
@@ -142,11 +143,9 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	
 	func createNewReminderListPressed(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
-		reminderLists.insert(ReminderList(name: "", color: colorForNewList), atIndex: 0)
-		let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-		self.tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-        println(self.tableView)
-		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath)!
+		insertNewObject(ReminderList(name: "", color: colorForNewList))
+		let newIndexPath = NSIndexPath(forRow: reminderLists.count - 1, inSection: 0)
+		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
 		newCell.reminderListName.becomeFirstResponder()
 	}

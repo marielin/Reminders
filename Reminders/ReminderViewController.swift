@@ -16,9 +16,9 @@ class ReminderViewController: UITableViewController {
 
     let dateFormatter = NSDateFormatter()
 
-    let noAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell", "ReminderAlarmCell", "ReminderRepeatCell"], ["ReminderNotesCell"]]
-    let isAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell"], ["ReminderNotesCell"]]
-    let editingAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell", "ReminderAlarmCell", "ReminderAlarmPickerCell", "ReminderRepeatCell"], ["ReminderNotesCell"]]
+    let noAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell", "ReminderNotesCell"]]
+    let isAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell", "ReminderAlarmCell", "ReminderRepeatCell", "ReminderNotesCell"]]
+    let editingAlarmCellStructure = [["ReminderNameCell"], ["ReminderRemindCell", "ReminderAlarmCell", "ReminderAlarmPickerCell", "ReminderRepeatCell", "ReminderNotesCell"]]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,20 +40,20 @@ class ReminderViewController: UITableViewController {
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
-        } else if section == 1 {
-            if reminder.hasAlarms == true {
-                return 3
-            } else {
-                return 1
-            }
         } else {
-            return 1
+            if isEditingAlarm == true {
+                return 5
+            } else if reminder.hasAlarms == true {
+                return 4
+            } else {
+                return 2
+            }
         }
     }
 
@@ -76,23 +76,34 @@ class ReminderViewController: UITableViewController {
         if indexPath.section == 0 {
             var cell = cell as! ReminderNameCell
             cell.reminderName.text == reminder.title
-        } else if indexPath.section == 1 {
+        } else {
             if indexPath.row == 0 {
                 var cell = cell as! ReminderRemindCell
                 cell.isReminder.enabled == reminder.hasAlarms
-            } else if indexPath.row == 1 {
-                var cell = cell // as ReminderAlarmCell
-                cell.detailTextLabel!.text = dateFormatter.stringFromDate(reminder.alarms[0].absoluteDate)
-            } else if (isEditingAlarm == true && indexPath.row == 3) || (isEditingAlarm == false && indexPath.row == 2) {
-                var cell = cell // as ReminderRepeatCell
-                // cell.detailTextLabel?.text = reminder.recurrenceRules
-                cell.detailTextLabel?.text = "To-do"
             }
-        } else { // indexPath.section == 2
-//            var cell = cell as! ReminderNotesCell
-            // cell.notes.text = reminder.notes
+            
+            else if reminder.hasAlarms == true {
+                if indexPath.row == 1 { // ReminderAlarmCell
+                    cell.detailTextLabel!.text = dateFormatter.stringFromDate(reminder.alarms[0].absoluteDate)
+                } else if isEditingAlarm == true {
+                    if indexPath.row == 2 { // ReminderNotesCell
+                        
+                    } else if indexPath.row == 3 { // as ReminderRepeatCell
+//                        cell.detailTextLabel?.text = reminder.recurrenceRules
+                        cell.detailTextLabel?.text = "To-do"
+                    } else {
+//                        var cell = cell as! ReminderNotesCell
+//                        cell.notes.text = reminder.notes
+                    }
+                } else if isEditingAlarm == false {
+//                    var cell = cell as! ReminderNotesCell
+//                    cell.notes.text = reminder.notes
+                }
+            } else {
+//              var cell = cell as! ReminderNotesCell
+//              cell.notes.text = reminder.notes
+            }
         }
-
 
         return cell
     }

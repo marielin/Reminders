@@ -28,6 +28,10 @@ class DetailViewController: UITableViewController {
         reminder.addAlarm(alarm)
         reminder.notes = "Brief description of the reminder"
         insertNewObject(reminder)
+        
+        self.tableView.estimatedRowHeight = 44.0
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,8 +90,11 @@ class DetailViewController: UITableViewController {
         var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             
         })
+        
+        markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
+        // deleteAction.backgroundColor = UIColor.redColor() // is default
 
-        return [markCompletedAction, deleteAction]
+        return [deleteAction, markCompletedAction]
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
