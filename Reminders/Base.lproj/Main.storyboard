@@ -278,13 +278,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reminder List Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26K-Al-dUY">
-                                            <rect key="frame" x="30" y="11" width="522" height="21"/>
+                                            <rect key="frame" x="37" y="11" width="515" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="●" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAy-yI-ef6">
-                                            <rect key="frame" x="8" y="15" width="12" height="15"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAy-yI-ef6">
+                                            <rect key="frame" x="15" y="14" width="12" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="12" id="p9E-qC-mVd"/>
                                             </constraints>
@@ -312,7 +312,7 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="BAy-yI-ef6" secondAttribute="bottom" constant="3" id="IlB-vG-8cv"/>
                                         <constraint firstItem="26K-Al-dUY" firstAttribute="bottom" secondItem="l2e-Ew-UW2" secondAttribute="bottomMargin" id="Kym-iK-3r5"/>
                                         <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leading" constant="34" id="LsV-aI-UkU"/>
-                                        <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" id="MkG-un-u16"/>
+                                        <constraint firstItem="BAy-yI-ef6" firstAttribute="leading" secondItem="l2e-Ew-UW2" secondAttribute="leadingMargin" constant="7" id="MkG-un-u16"/>
                                         <constraint firstItem="26K-Al-dUY" firstAttribute="leading" secondItem="BAy-yI-ef6" secondAttribute="trailing" constant="8" symbolic="YES" id="R8M-Rv-2Rn"/>
                                         <constraint firstItem="26K-Al-dUY" firstAttribute="top" secondItem="l2e-Ew-UW2" secondAttribute="topMargin" constant="3" id="V9v-U0-eWN"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="26K-Al-dUY" secondAttribute="bottom" constant="3" id="WV7-3k-9by"/>
@@ -416,6 +416,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="YjC-Jq-Lx6"/>
     </inferredMetricsTieBreakers>
 </document>
