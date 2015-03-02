@@ -106,7 +106,8 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
+//        return true
+        return false // prevents changes reminders
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
@@ -122,7 +123,7 @@ class DetailViewController: UITableViewController {
         markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0)
         // deleteAction.backgroundColor = UIColor.redColor() // is default
         
-        return [deleteAction, markCompletedAction]
+        return [markCompletedAction, deleteAction]
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

@@ -12,11 +12,11 @@
 		17828A901AA285D600782036 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828A8F1AA285D600782036 /* DetailViewController.swift */; };
 		17828A931AA285D600782036 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17828A911AA285D600782036 /* Main.storyboard */; };
 		17828A951AA285D600782036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17828A941AA285D600782036 /* Images.xcassets */; };
-		17828A981AA285D600782036 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17828A961AA285D600782036 /* LaunchScreen.xib */; };
 		17828AA41AA285D600782036 /* RemindersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AA31AA285D600782036 /* RemindersTests.swift */; };
 		17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AAD1AA289BA00782036 /* ReminderList.swift */; };
 		17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AB11AA2A81D00782036 /* ReminderViewController.swift */; };
 		17828AE21AA2BB8B00782036 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828AE11AA2BB8B00782036 /* ReminderListCell.swift */; };
+		17B013B41AA3F22800313926 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17B013B31AA3F22800313926 /* LaunchScreen.storyboard */; };
 		17CE10861AA31AED0017AFCE /* ReminderNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE10851AA31AED0017AFCE /* ReminderNameCell.swift */; };
 		17CE10881AA31AF90017AFCE /* ReminderRemindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */; };
 		17CE108A1AA31B0F0017AFCE /* ReminderNotesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */; };
@@ -42,13 +42,13 @@
 		17828A8F1AA285D600782036 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		17828A921AA285D600782036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17828A941AA285D600782036 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		17828A971AA285D600782036 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		17828A9D1AA285D600782036 /* RemindersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemindersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17828AA21AA285D600782036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17828AA31AA285D600782036 /* RemindersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersTests.swift; sourceTree = "<group>"; };
 		17828AAD1AA289BA00782036 /* ReminderList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderList.swift; sourceTree = "<group>"; };
 		17828AB11AA2A81D00782036 /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		17828AE11AA2BB8B00782036 /* ReminderListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
+		17B013B31AA3F22800313926 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17CE10851AA31AED0017AFCE /* ReminderNameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderNameCell.swift; sourceTree = "<group>"; };
 		17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderRemindCell.swift; sourceTree = "<group>"; };
 		17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderNotesCell.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 				17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */,
 				17CE10851AA31AED0017AFCE /* ReminderNameCell.swift */,
 				17828A941AA285D600782036 /* Images.xcassets */,
-				17828A961AA285D600782036 /* LaunchScreen.xib */,
+				17B013B31AA3F22800313926 /* LaunchScreen.storyboard */,
 				17828A891AA285D600782036 /* Supporting Files */,
 			);
 			path = Reminders;
@@ -188,11 +188,11 @@
 				TargetAttributes = {
 					17828A851AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = VM5XXWMN9Y;
+						DevelopmentTeam = 2S3D8J8M3T;
 					};
 					17828A9C1AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = VM5XXWMN9Y;
+						DevelopmentTeam = 2S3D8J8M3T;
 						TestTargetID = 17828A851AA285D600782036;
 					};
 				};
@@ -221,8 +221,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17B013B41AA3F22800313926 /* LaunchScreen.storyboard in Resources */,
 				17828A931AA285D600782036 /* Main.storyboard in Resources */,
-				17828A981AA285D600782036 /* LaunchScreen.xib in Resources */,
 				17828A951AA285D600782036 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,14 +280,6 @@
 				17828A921AA285D600782036 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		17828A961AA285D600782036 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				17828A971AA285D600782036 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

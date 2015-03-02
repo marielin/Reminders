@@ -124,7 +124,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 			reminderList.reminders = reminders
 			self.insertNewObject(reminderList)
 			
-			self.beginUpdatesCount--
+            self.beginUpdatesCount--
 			if self.beginUpdatesCount == 0 {
 				self.tableView.endUpdates()
 			}
