@@ -276,7 +276,8 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 			if indexPath.row == 0 {
 				return false
 			} else {
-				return true
+//				return true
+                return false // disables delete slide action for reminder lists, want to avoid accidental mass deletions
 			}
 		} else {
 			return false

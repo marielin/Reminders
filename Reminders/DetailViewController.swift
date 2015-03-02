@@ -106,49 +106,67 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        return true
-        return false // prevents changes reminders
+        return true
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]?  {
         
         var markCompletedAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Complete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            self.reminders.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//            self.reminders.removeAtIndex(indexPath.row)
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.markCompletedReminderForCellAtIndexPath(indexPath)
         })
-        var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-            self.deleteReminderForCellAtIndexPath(indexPath)
-        })
+//        var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+//            self.deleteReminderForCellAtIndexPath(indexPath)
+//        })
         
         markCompletedAction.backgroundColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0)
         // deleteAction.backgroundColor = UIColor.redColor() // is default
         
-        return [markCompletedAction, deleteAction]
+//        return [markCompletedAction, deleteAction]
+        return [markCompletedAction] // disables delete action, which may not be a necessary inclusion
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-			self.deleteReminderForCellAtIndexPath(indexPath)
+//			self.deleteReminderForCellAtIndexPath(indexPath)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
+    
+    func markCompletedReminderForCellAtIndexPath(indexPath: NSIndexPath) {
+        // delete the reminder
+        let cell = tableView.cellForRowAtIndexPath(indexPath)!
+        var reminder = getReminderForName(cell.textLabel!.text!)
+        var error = NSErrorPointer()
+        reminder.completed = true
+        dataStore.eventStore.saveReminder(reminder, commit: true, error: error)
+        if error != nil {
+            println("Error completing reminder: \(error)")
+        } else {
+            println("Successfully completed reminder.")
+        }
+        
+        reminders.removeAtIndex(indexPath.row)
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    }
 	
-	func deleteReminderForCellAtIndexPath(indexPath: NSIndexPath) {
-		// delete the reminder
-            let cell = tableView.cellForRowAtIndexPath(indexPath)!
-            var reminder = getReminderForName(cell.textLabel!.text!)
-            var error = NSErrorPointer()
-            dataStore.eventStore.removeReminder(reminder, commit: true, error: error)
-            if error != nil {
-                println("Error deleting reminder: \(error)")
-            } else {
-                println("Successfully deleted reminder.")
-            }
-            
-            reminders.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-	}
+//	func deleteReminderForCellAtIndexPath(indexPath: NSIndexPath) {
+//		// delete the reminder
+//            let cell = tableView.cellForRowAtIndexPath(indexPath)!
+//            var reminder = getReminderForName(cell.textLabel!.text!)
+//            var error = NSErrorPointer()
+//            dataStore.eventStore.removeReminder(reminder, commit: true, error: error)
+//            if error != nil {
+//                println("Error deleting reminder: \(error)")
+//            } else {
+//                println("Successfully deleted reminder.")
+//            }
+//            
+//            reminders.removeAtIndex(indexPath.row)
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+//	}
 	
 	func getReminderForName(name: String) -> EKReminder! {
 		for reminder in self.reminders {
