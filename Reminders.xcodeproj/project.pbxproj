@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17750CDB1AA933EA00C3D571 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17750CDA1AA933EA00C3D571 /* ReminderCell.swift */; };
 		17828A8C1AA285D600782036 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828A8B1AA285D600782036 /* AppDelegate.swift */; };
 		17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828A8D1AA285D600782036 /* MasterViewController.swift */; };
 		17828A901AA285D600782036 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17828A8F1AA285D600782036 /* DetailViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		17750CDA1AA933EA00C3D571 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		17828A861AA285D600782036 /* Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17828A8A1AA285D600782036 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17828A8B1AA285D600782036 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				17828A8F1AA285D600782036 /* DetailViewController.swift */,
 				17828AB11AA2A81D00782036 /* ReminderViewController.swift */,
 				17828A911AA285D600782036 /* Main.storyboard */,
+				17750CDA1AA933EA00C3D571 /* ReminderCell.swift */,
 				17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */,
 				17CE108B1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift */,
 				17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */,
@@ -248,6 +251,7 @@
 				17828A8E1AA285D600782036 /* MasterViewController.swift in Sources */,
 				17828AB21AA2A81D00782036 /* ReminderViewController.swift in Sources */,
 				17828A8C1AA285D600782036 /* AppDelegate.swift in Sources */,
+				17750CDB1AA933EA00C3D571 /* ReminderCell.swift in Sources */,
 				17828AAE1AA289BA00782036 /* ReminderList.swift in Sources */,
 				17CE108A1AA31B0F0017AFCE /* ReminderNotesCell.swift in Sources */,
 				17828AE21AA2BB8B00782036 /* ReminderListCell.swift in Sources */,

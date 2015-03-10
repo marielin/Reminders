@@ -93,7 +93,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	
 	func reloadReminders() {
 		// remove all existing reminder lists
-		self.tableView.beginUpdates()
+//		self.tableView.beginUpdates()
 		for i in 0 ..< self.reminderLists.count {
 			self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: i + 1, inSection: 0)], withRowAnimation: .Automatic)
 		}
@@ -164,6 +164,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         reminderLists.append(sender)
         let indexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//        self.tableView.reloadData()
 	}
     
     func insertNewObjects(lists: [ReminderList]) {

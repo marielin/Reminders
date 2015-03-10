@@ -15,6 +15,15 @@ class DetailViewController: UITableViewController {
     var listTitle = String()
 	
 	let dataStore = DataStore.sharedInstance
+    
+    var eventStore: EKEventStore! {
+        get {
+            return self.dataStore.eventStore
+        }
+        set {
+            self.dataStore.eventStore = newValue
+        }
+    }
 	
 	var masterVC: MasterViewController! {
 		if let parent = self.presentingViewController {
@@ -36,8 +45,11 @@ class DetailViewController: UITableViewController {
         
         let eventStore = EKEventStore()
         
-        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "createNewReminderPressed:")
+        self.navigationItem.rightBarButtonItem = addButton
+
         timeFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
         dateFormatter.doesRelativeDateFormatting = true;
         
         self.tableView.estimatedRowHeight = 44.0
@@ -47,6 +59,20 @@ class DetailViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func createReminder(#name: String) {
+        let reminder = EKReminder(eventStore: self.eventStore)
+        reminder.title = name
+        
+        // save changes
+        var error = NSErrorPointer()
+        eventStore.saveReminder(reminder, commit: true, error: error)
+        if error != nil {
+            println("Error creating new reminder: \(error)")
+        } else {
+            println("Successfully saved new reminder.")
+        }
     }
     
     func insertNewObject(reminder: EKReminder) {
@@ -59,9 +85,17 @@ class DetailViewController: UITableViewController {
 			println("Successfully saved reminder.")
 		}
 		
-        reminders.insert(reminder, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        reminders.insert(reminder, atIndex: reminders.count)
+        let indexPath = NSIndexPath(forRow: reminders.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func createNewReminderPressed(sender: AnyObject!) {
+        insertNewObject(EKReminder(eventStore: eventStore))
+        let newIndexPath = NSIndexPath(forRow: reminders.count - 1, inSection: 0)
+        let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderCell
+        newCell.setEditing(true, animated: true)
+        newCell.reminderName.becomeFirstResponder()
     }
     
     // MARK: - Segues
@@ -88,19 +122,19 @@ class DetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
-        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as! ReminderCell
         
         let object = reminders[indexPath.row] as EKReminder
-        cell.textLabel!.text = object.title
+        cell.reminderName!.text = object.title
         if object.hasAlarms == true {
             let alarmDate: NSDate = object.alarms[0].absoluteDate
-            if alarmDate.timeIntervalSinceNow < 60 * 60 * 24 {
-                cell.detailTextLabel!.text = timeFormatter.stringFromDate(alarmDate)
+            if alarmDate.timeIntervalSinceNow < 60.0 * 60.0 * 24.0 {
+                cell.alarmDate!.text = timeFormatter.stringFromDate(alarmDate)
             } else {
-                cell.detailTextLabel!.text = dateFormatter.stringFromDate(alarmDate)
+                cell.alarmDate!.text = dateFormatter.stringFromDate(alarmDate)
             }
         } else {
-            cell.detailTextLabel!.text = ""
+            cell.alarmDate!.text = ""
         }
         return cell
     }
@@ -132,6 +166,12 @@ class DetailViewController: UITableViewController {
 //			self.deleteReminderForCellAtIndexPath(indexPath)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell? {
+            cell.reminderName.userInteractionEnabled = true
         }
     }
     
@@ -176,7 +216,37 @@ class DetailViewController: UITableViewController {
 		}
 		return nil
 	}
+    
+    func cellForTextField(textField: UITextField) -> ReminderCell? {
+        for i in 1 ..< self.reminders.count + 1 {
+            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
+            if textField == cell.reminderName {
+                return cell
+            }
+        }
+        return nil
+    }
 
-
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        let cell = self.cellForTextField(textField)
+        return cell != nil ? cell!.editing : false
+    }
+    
+    /// Save the new Reminder List
+    func textFieldDidEndEditing(textField: UITextField) {
+        if let cell = self.cellForTextField(textField) {
+            self.createReminder(name: textField.text)
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        let cell = self.cellForTextField(textField)
+        cell?.setEditing(false, animated: true)
+        return false
+    }
+    
 }
 
