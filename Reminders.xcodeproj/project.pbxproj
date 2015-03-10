@@ -97,21 +97,21 @@
 		17828A881AA285D600782036 /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
+				17B013B31AA3F22800313926 /* LaunchScreen.storyboard */,
+				17828A8B1AA285D600782036 /* AppDelegate.swift */,
 				B8733DCD1AA364B60014FC1F /* DataStore.swift */,
+				17828A8F1AA285D600782036 /* DetailViewController.swift */,
+				17828A8D1AA285D600782036 /* MasterViewController.swift */,
+				17CE108B1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift */,
+				17750CDA1AA933EA00C3D571 /* ReminderCell.swift */,
 				17828AAD1AA289BA00782036 /* ReminderList.swift */,
 				17828AE11AA2BB8B00782036 /* ReminderListCell.swift */,
-				17828A8B1AA285D600782036 /* AppDelegate.swift */,
-				17828A8D1AA285D600782036 /* MasterViewController.swift */,
-				17828A8F1AA285D600782036 /* DetailViewController.swift */,
-				17828AB11AA2A81D00782036 /* ReminderViewController.swift */,
-				17828A911AA285D600782036 /* Main.storyboard */,
-				17750CDA1AA933EA00C3D571 /* ReminderCell.swift */,
-				17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */,
-				17CE108B1AA31CB20017AFCE /* ReminderAlarmPickerCell.swift */,
-				17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */,
 				17CE10851AA31AED0017AFCE /* ReminderNameCell.swift */,
+				17CE10891AA31B0F0017AFCE /* ReminderNotesCell.swift */,
+				17CE10871AA31AF90017AFCE /* ReminderRemindCell.swift */,
+				17828AB11AA2A81D00782036 /* ReminderViewController.swift */,
 				17828A941AA285D600782036 /* Images.xcassets */,
-				17B013B31AA3F22800313926 /* LaunchScreen.storyboard */,
+				17828A911AA285D600782036 /* Main.storyboard */,
 				17828A891AA285D600782036 /* Supporting Files */,
 			);
 			path = Reminders;
@@ -191,11 +191,11 @@
 				TargetAttributes = {
 					17828A851AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = VM5XXWMN9Y;
 					};
 					17828A9C1AA285D600782036 = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = 2S3D8J8M3T;
+						DevelopmentTeam = VM5XXWMN9Y;
 						TestTargetID = 17828A851AA285D600782036;
 					};
 				};

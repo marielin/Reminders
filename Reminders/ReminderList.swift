@@ -6,25 +6,27 @@
 //  Copyright (c) 2015 Sapphirine. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import EventKit
 
 class ReminderList {
+	
+	/// The calendar represented by this ReminderList.
+	var calendar: EKCalendar!
     
-    // array of reminders in the list
+    /// The array of reminders in the list.
     var reminders = [EKReminder]()
     
-    // name of the reminder list
+    /// The name of the reminder list.
     var name = String()
     
-    // color of the reminder list
+    /// The color of the reminder list.
     var color = UIColor()
     
     // who the reminder is shared with
     // var sharedWith =
     
-    // initialize the list with a color
+    /// Initialize the list with a color.
     init(name: String, color: UIColor) {
         self.name = name
         self.color = color

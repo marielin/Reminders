@@ -9,6 +9,7 @@
 import UIKit
 
 class ReminderCell: UITableViewCell {
+	
     @IBOutlet weak var reminderName: UITextField!
     @IBOutlet weak var alarmDate: UILabel!
     

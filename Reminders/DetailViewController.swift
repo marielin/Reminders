@@ -10,7 +10,8 @@ import UIKit
 import EventKit
 
 class DetailViewController: UITableViewController {
-    
+	
+	var calendar: EKCalendar!
     var reminders = [EKReminder]()
     var listTitle = String()
 	
@@ -56,13 +57,9 @@ class DetailViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func createReminder(#name: String) {
         let reminder = EKReminder(eventStore: self.eventStore)
+		reminder.calendar = self.calendar
         reminder.title = name
         
         // save changes
@@ -91,7 +88,9 @@ class DetailViewController: UITableViewController {
     }
     
     func createNewReminderPressed(sender: AnyObject!) {
-        insertNewObject(EKReminder(eventStore: eventStore))
+		let newReminder = EKReminder(eventStore: eventStore)
+		newReminder.calendar = self.calendar
+        insertNewObject(newReminder)
         let newIndexPath = NSIndexPath(forRow: reminders.count - 1, inSection: 0)
         let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderCell
         newCell.setEditing(true, animated: true)
@@ -177,17 +176,18 @@ class DetailViewController: UITableViewController {
     
     func markCompletedReminderForCellAtIndexPath(indexPath: NSIndexPath) {
         // delete the reminder
-        let cell = tableView.cellForRowAtIndexPath(indexPath)!
-        var reminder = getReminderForName(cell.textLabel!.text!)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)! as! ReminderCell
+        var reminder = getReminderForName(cell.reminderName!.text!)
         var error = NSErrorPointer()
         reminder.completed = true
-        dataStore.eventStore.saveReminder(reminder, commit: true, error: error)
+        eventStore.saveReminder(reminder, commit: true, error: error)
         if error != nil {
-            println("Error completing reminder: \(error)")
+            println("Error marking reminder as completed: \(error)")
         } else {
             println("Successfully completed reminder.")
         }
-        
+		
+		// update state and UI
         reminders.removeAtIndex(indexPath.row)
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
@@ -218,7 +218,7 @@ class DetailViewController: UITableViewController {
 	}
     
     func cellForTextField(textField: UITextField) -> ReminderCell? {
-        for i in 1 ..< self.reminders.count + 1 {
+        for i in 0 ..< self.reminders.count {
             let indexPath = NSIndexPath(forRow: i, inSection: 0)
             let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderCell
             if textField == cell.reminderName {
@@ -238,7 +238,18 @@ class DetailViewController: UITableViewController {
     /// Save the new Reminder List
     func textFieldDidEndEditing(textField: UITextField) {
         if let cell = self.cellForTextField(textField) {
-            self.createReminder(name: textField.text)
+			let indexPath = tableView.indexPathForCell(cell)!
+			let rem = self.reminders[indexPath.row]
+			rem.title = cell.reminderName.text
+			
+			// save the changes
+			let error = NSErrorPointer()
+			eventStore.saveReminder(rem, commit: true, error: error)
+			if error != nil {
+				println("Error saving changes to reminder: \(error)")
+			} else {
+				println("Successfully saved changes to reminder.")
+			}
         }
     }
     

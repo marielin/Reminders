@@ -109,6 +109,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 					self.beginUpdatesCount++
 					let color = UIColor(CGColor: calendar.CGColor)!
 					var reminderList = ReminderList(name: calendar.title, color: color)
+					reminderList.calendar = calendar
 					let predicate = eventStore.predicateForIncompleteRemindersWithDueDateStarting(nil, ending: nil, calendars: [calendar])
 					self.fetchRemindersForPredicate(predicate, reminderList: reminderList)
 				}
@@ -164,7 +165,6 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         reminderLists.append(sender)
         let indexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//        self.tableView.reloadData()
 	}
     
     func insertNewObjects(lists: [ReminderList]) {
@@ -199,7 +199,9 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	
 	func createNewReminderListPressed(sender: AnyObject!) {
 		let colorForNewList = UIColor.greenColor()
-		insertNewObject(ReminderList(name: "", color: colorForNewList))
+		let newReminderList = ReminderList(name: "", color: colorForNewList)
+		newReminderList.calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)
+		insertNewObject(newReminderList)
 		let newIndexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
@@ -217,6 +219,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 let object = reminderLists[indexPath.row - 1] as ReminderList
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+				controller.calendar = object.calendar
                 controller.reminders = object.reminders
                 controller.listTitle = object.name
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
