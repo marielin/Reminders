@@ -18,12 +18,7 @@ class DetailViewController: UITableViewController {
 	let dataStore = DataStore.sharedInstance
     
     var eventStore: EKEventStore! {
-        get {
-            return self.dataStore.eventStore
-        }
-        set {
-            self.dataStore.eventStore = newValue
-        }
+		return self.dataStore.eventStore
     }
 	
 	var masterVC: MasterViewController! {

@@ -26,9 +26,16 @@ class ReminderList {
     // who the reminder is shared with
     // var sharedWith =
     
-    /// Initialize the list with a color.
+    /// Initialize the list with a title and a color.
     init(name: String, color: UIColor) {
         self.name = name
         self.color = color
     }
+	
+	/// Initialize the list from an existing calendar.
+	init(calendar: EKCalendar) {
+		self.calendar = calendar
+		self.name = calendar.title
+		self.color = UIColor(CGColor: calendar.CGColor)!
+	}
 }
