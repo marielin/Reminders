@@ -67,18 +67,24 @@ class MasterViewController: UITableViewController {
 		let nc = NSNotificationCenter.defaultCenter()
 		keyboardDidShowNotification = nc.addObserverForName(UIKeyboardDidShowNotification, object: nil, queue: nil) { (note) -> Void in
 			let kbSize = (note.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size
-			let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
+			var contentInsets = self.tableView.contentInset
+			contentInsets.bottom += kbSize.height
 			self.tableView.contentInset = contentInsets
-			self.tableView.scrollIndicatorInsets = contentInsets
+			var scrollInsets = self.tableView.scrollIndicatorInsets
+			scrollInsets.bottom += kbSize.height
+			self.tableView.scrollIndicatorInsets = scrollInsets
 			if let textField = self.activeTextField, cell = self.cellForTextField(textField), indexPath = self.tableView.indexPathForCell(cell) {
 				self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: true)
 			}
 		}
 		// reclaim the space that held the keyboard
 		keyboardWillHideNotification = nc.addObserverForName(UIKeyboardWillHideNotification, object: nil, queue: nil) { (note) -> Void in
-			let contentInsets = UIEdgeInsetsZero
+			var contentInsets = self.tableView.contentInset
+			contentInsets.bottom = 0.0
 			self.tableView.contentInset = contentInsets
-			self.tableView.scrollIndicatorInsets = contentInsets
+			var scrollInsets = self.tableView.scrollIndicatorInsets
+			scrollInsets.bottom = 0.0
+			self.tableView.scrollIndicatorInsets = scrollInsets
 		}
 	}
 	
@@ -171,23 +177,6 @@ class MasterViewController: UITableViewController {
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
 		newCell.reminderListName.becomeFirstResponder()
-	}
-	
-	/// Create an empty new list of reminders and save it to the database.
-	func createReminderList(#name: String, color: UIColor) {
-		let calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: self.eventStore)
-		calendar.title = name
-		calendar.CGColor = color.CGColor
-		calendar.source = self.source
-		
-		// save changes
-		var error = NSErrorPointer()
-		eventStore.saveCalendar(calendar, commit: true, error: error)
-		if error != nil {
-			println("Error creating new calendar: \(error)")
-		} else {
-			println("Successfully saved new calendar.")
-		}
 	}
 
     // MARK: - Segues
