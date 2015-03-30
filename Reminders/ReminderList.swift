@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class ReminderList {
+class ReminderList : Comparable {
 	
 	/// The calendar represented by this ReminderList.
 	var calendar: EKCalendar!
@@ -38,4 +38,15 @@ class ReminderList {
 		self.name = calendar.title
 		self.color = UIColor(CGColor: calendar.CGColor)!
 	}
+	
+}
+
+/// Check whether two ReminderLists are equatable based on their names.
+func ==(lhs: ReminderList, rhs: ReminderList) -> Bool {
+	return lhs.name == rhs.name
+}
+
+/// Compare two ReminderLists based on their names.
+func <(lhs: ReminderList, rhs: ReminderList) -> Bool {
+	return lhs.name < rhs.name
 }

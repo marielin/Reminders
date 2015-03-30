@@ -13,6 +13,7 @@ class ReminderListCell : UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var reminderListColor: UILabel!
     @IBOutlet weak var reminderListName: UITextField!
+	var reminderList: ReminderList!
 	
 	override func setEditing(editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)

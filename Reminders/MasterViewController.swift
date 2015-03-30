@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class MasterViewController: UITableViewController, UITextFieldDelegate {
+class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     
@@ -27,7 +27,8 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	var source: EKSource! {
 		return self.dataStore.source
 	}
-
+	
+	// MARK: - View lifecycle
 	
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,6 +59,40 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		}
     }
 	
+	private var keyboardDidShowNotification: AnyObject!
+	private var keyboardWillHideNotification: AnyObject!
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		// resize the table view so it's above the keyboard
+		let nc = NSNotificationCenter.defaultCenter()
+		keyboardDidShowNotification = nc.addObserverForName(UIKeyboardDidShowNotification, object: nil, queue: nil) { (note) -> Void in
+			let kbSize = (note.userInfo![UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue().size
+			let contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
+			self.tableView.contentInset = contentInsets
+			self.tableView.scrollIndicatorInsets = contentInsets
+			if let textField = self.activeTextField, cell = self.cellForTextField(textField), indexPath = self.tableView.indexPathForCell(cell) {
+				self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: true)
+			}
+		}
+		// reclaim the space that held the keyboard
+		keyboardWillHideNotification = nc.addObserverForName(UIKeyboardWillHideNotification, object: nil, queue: nil) { (note) -> Void in
+			let contentInsets = UIEdgeInsetsZero
+			self.tableView.contentInset = contentInsets
+			self.tableView.scrollIndicatorInsets = contentInsets
+		}
+	}
+	
+	override func viewWillDisappear(animated: Bool) {
+		let nc = NSNotificationCenter.defaultCenter()
+		nc.removeObserver(keyboardDidShowNotification)
+		keyboardDidShowNotification = nil
+		nc.removeObserver(keyboardWillHideNotification)
+		keyboardWillHideNotification = nil
+		super.viewWillDisappear(animated)
+	}
+	
+	// MARK: -
+	
 	func reloadReminders() {
 		self.reminderLists = [ReminderList]()
 		
@@ -69,9 +104,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 			for calendar in source.calendarsForEntityType(EKEntityTypeReminder) as! Set<EKCalendar> {
 				if (calendar.allowedEntityTypes & EKEntityMaskReminder) != 0 {
 					self.beginUpdatesCount++
-					let color = UIColor(CGColor: calendar.CGColor)!
-					var reminderList = ReminderList(name: calendar.title, color: color)
-					reminderList.calendar = calendar
+					var reminderList = ReminderList(calendar: calendar)
 					let predicate = eventStore.predicateForIncompleteRemindersWithDueDateStarting(nil, ending: nil, calendars: [calendar])
 					self.fetchRemindersForPredicate(predicate, reminderList: reminderList)
 				}
@@ -89,6 +122,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 			
             self.beginUpdatesCount--
 			if self.beginUpdatesCount == 0 {
+				sort(&self.reminderLists)
 				self.tableView.reloadData()
 			}
 		}
@@ -111,14 +145,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 	
 	/// Given a text field, find the ReminderListCell that owns it.
 	private func cellForTextField(textField: UITextField) -> ReminderListCell? {
-		for i in 0 ..< self.reminderLists.count {
-			let indexPath = NSIndexPath(forRow: i + 1, inSection: 0)
-			let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell
-			if textField == cell.reminderListName {
-				return cell
-			}
-		}
-		return nil
+		return textField.superview?.superview as? ReminderListCell
 	}
 	
 	/// Find the calendar with a title matching a given name.
@@ -137,12 +164,30 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		let newCalendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: eventStore)!
 		newCalendar.title = ""
 		newCalendar.CGColor = UIColor.greenColor().CGColor
+		newCalendar.source = self.source
 		let newReminderList = ReminderList(calendar: newCalendar)
 		insertNewObject(newReminderList)
 		let newIndexPath = NSIndexPath(forRow: reminderLists.count, inSection: 0)
 		let newCell = self.tableView.cellForRowAtIndexPath(newIndexPath) as! ReminderListCell
 		newCell.setEditing(true, animated: true)
 		newCell.reminderListName.becomeFirstResponder()
+	}
+	
+	/// Create an empty new list of reminders and save it to the database.
+	func createReminderList(#name: String, color: UIColor) {
+		let calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: self.eventStore)
+		calendar.title = name
+		calendar.CGColor = color.CGColor
+		calendar.source = self.source
+		
+		// save changes
+		var error = NSErrorPointer()
+		eventStore.saveCalendar(calendar, commit: true, error: error)
+		if error != nil {
+			println("Error creating new calendar: \(error)")
+		} else {
+			println("Successfully saved new calendar.")
+		}
 	}
 
     // MARK: - Segues
@@ -185,7 +230,6 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         var identifier = String()
         
 		if indexPath.section == 0 {
@@ -203,6 +247,7 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         if indexPath.section == 0 && indexPath.row > 0 {
             var cell = cell as! ReminderListCell
             let object = reminderLists[indexPath.row - 1]
+			cell.reminderList = object
             cell.reminderListName.text = object.name
             cell.reminderListColor.textColor = object.color
         }
@@ -257,17 +302,41 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
         }
 	}
 	
-	// MARK: - UITextFieldDelegate
-	
+	private var activeTextField: UITextField?
+}
+
+
+extension MasterViewController : UITextFieldDelegate {
 	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
 		let cell = cellForTextField(textField)
-		return cell != nil ? cell!.editing : false
+		return cell?.editing ?? false
 	}
 	
-	/// Save the new Reminder List
+	func textFieldDidBeginEditing(textField: UITextField) {
+		activeTextField = textField
+		if let cell = cellForTextField(textField), indexPath = tableView.indexPathForCell(cell) {
+			tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: true)
+		}
+	}
+	
+	// Save the new Reminder List
 	func textFieldDidEndEditing(textField: UITextField) {
-		if let cell = cellForTextField(textField) {
-			createReminderList(name: textField.text, color: cell.reminderListColor.textColor)
+		activeTextField = nil
+		if let cell = cellForTextField(textField), indexPath = tableView.indexPathForCell(cell) {
+			if cell.reminderList.name != textField.text {
+				cell.reminderList.name = textField.text
+				let calendar = cell.reminderList.calendar
+				calendar.title = textField.text
+				calendar.CGColor = cell.reminderListColor.textColor.CGColor
+				// save changes
+				var error = NSErrorPointer()
+				eventStore.saveCalendar(calendar, commit: true, error: error)
+				if error != nil {
+					println("Error creating new calendar: \(error)")
+				} else {
+					println("Successfully saved new calendar.")
+				}
+			}
 		}
 	}
 	
@@ -276,21 +345,4 @@ class MasterViewController: UITableViewController, UITextFieldDelegate {
 		cell?.setEditing(false, animated: true)
 		return false
 	}
-	
-	func createReminderList(#name: String, color: UIColor) {
-		let calendar = EKCalendar(forEntityType: EKEntityTypeReminder, eventStore: self.eventStore)
-		calendar.title = name
-		calendar.CGColor = color.CGColor
-		calendar.source = self.source
-		
-		// save changes
-		var error = NSErrorPointer()
-		eventStore.saveCalendar(calendar, commit: true, error: error)
-		if error != nil {
-			println("Error creating new calendar: \(error)")
-		} else {
-			println("Successfully saved new calendar.")
-		}
-	}
-	
 }
