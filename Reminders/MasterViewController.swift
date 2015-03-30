@@ -251,13 +251,18 @@ class MasterViewController: UITableViewController {
 				return false
 			} else {
 				// reminder lists
-                return false // disables delete slide action for reminder lists, want to avoid accidental mass deletions
+                return true
 			}
 		} else {
 			// completed reminders
 			return false
 		}
-    }
+	}
+	
+	override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+		// disable swipe actions
+		return []
+	}
 	
 	override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
 		if let cell = tableView.cellForRowAtIndexPath(indexPath) as! ReminderListCell? {
